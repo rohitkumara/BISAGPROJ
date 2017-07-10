@@ -5,19 +5,25 @@
 
     <link rel="stylesheet" href="/lib/ol.css" type="text/css">
     <style>
+    #group {
+ 			width: 75%;
+ 			height: 755px;
+ 			margin: 0;
+ 		}
         #map {
             clear: both;
             position: relative;
             width: 768px;
             height: 755px;
             border: 1px solid black;
+			display: inline-block;
         }
         #nodelist {
             clear: both;
             position: relative;
-            width: 100%;
-            height: 250px;
-            float: right;
+            width: 24%;
+            height: 100%;
+            display: inline-block;
         }
         #nodelist2 {
             clear: both;
@@ -60,90 +66,9 @@
 
 </head>
 <body>
-<div id="toolbar" style="display: none;">
-      <ul>
-        <li>
-          <a>WMS version:</a>
-          <select id="wmsVersionSelector" onchange="setWMSVersion(value)">
-            <option value="1.1.1">1.1.1</option>
-            <option value="1.3.0">1.3.0</option>
-          </select>
-        </li>
-        <li>
-          <a>Tiling:</a>
-          <select id="tilingModeSelector" onchange="setTileMode(value)">
-            <option value="untiled">Single tile</option>
-            <option value="tiled">Tiled</option>
-          </select>
-        </li>
-        <li>
-          <a>Antialias:</a>
-          <select id="antialiasSelector" onchange="setAntialiasMode(value)">
-            <option value="full">Full</option>
-            <option value="text">Text only</option>
-            <option value="none">Disabled</option>
-          </select>
-        </li>
-        <li>
-          <a>Format:</a>
-          <select id="imageFormatSelector" onchange="setImageFormat(value)">
-            <option value="image/png">PNG 24bit</option>
-            <option value="image/png8">PNG 8bit</option>
-            <option value="image/gif">GIF</option>
-            <option id="jpeg" value="image/jpeg">JPEG</option>
-            <option id="jpeg-png" value="image/vnd.jpeg-png">JPEG-PNG</option>
-          </select>
-        </li>
-        <li>
-          <a>Styles:</a>
-          <select id="imageFormatSelector" onchange="setStyle(value)">
-            <option value="">Default</option>
-          </select>
-        </li>
-        <li>
-          <a>Width/Height:</a>
-          <select id="widthSelector" onchange="setWidth(value)">
-             <!--
-             These values come from a statistics of the viewable area given a certain screen area
-             (but have been adapted a litte, simplified numbers, added some resolutions for wide screen)
-             You can find them here: http://www.evolt.org/article/Real_World_Browser_Size_Stats_Part_II/20/2297/
-             --><option value="auto">Auto</option>
-                <option value="600">600</option>
-                <option value="750">750</option>
-                <option value="950">950</option>
-                <option value="1000">1000</option>
-                <option value="1200">1200</option>
-                <option value="1400">1400</option>
-                <option value="1600">1600</option>
-                <option value="1900">1900</option>
-            </select>
-            <select id="heigthSelector" onchange="setHeight(value)">
-                <option value="auto">Auto</option>
-                <option value="300">300</option>
-                <option value="400">400</option>
-                <option value="500">500</option>
-                <option value="600">600</option>
-                <option value="700">700</option>
-                <option value="800">800</option>
-                <option value="900">900</option>
-                <option value="1000">1000</option>
-            </select>
-          </li>
-          <li>
-              <a>Filter:</a>
-              <select id="filterType">
-                  <option value="cql">CQL</option>
-                  <option value="ogc">OGC</option>
-                  <option value="fid">FeatureID</option>
-              </select>
-              <input type="text" size="80" id="filter"/>
-              <a id="updateFilterButton" href="#" onClick="updateFilter()" title="Apply filter">Apply</a>
-              <a id="resetFilterButton" href="#" onClick="resetFilter()" title="Reset filter">Reset</a>
-          </li>
-        </ul>
-      </div>
-
-<div id="map"></div>
+<div id="group">
+	<div id="map"></div><div id="nodelist"></div>
+</div>
 
 <div id="wrapper">
     <div id="location"></div>
@@ -169,7 +94,7 @@
 </form>
 <div id="nodelist"></div>
 <script type="text/javascript">
-	var username = prompt("What is your name?");
+var username = prompt("What is your name?");
 	var id_feature;
 	var error_code=false;
     document.getElementById("type").style.visibility="hidden";
@@ -274,7 +199,7 @@
             })
         });   
         
-        var untiled1_source = new ol.source.TileWMS({
+        var untiled1_source = new ol.source.ImageWMS({
             ratio: 1,
             url: 'http://localhost:8080/geoserver/testSQL/wms',
             params: {
@@ -334,21 +259,15 @@
         console.log(document.getElementById('type').value);
         var featureOverlay;
         var features;
-       
-            var vector_source;
-            var snap = new ol.interaction.Snap({
-                source: vector_source
-              });
-              map.addInteraction(snap);
-              var creator=false;
         function choice_draw_edit() {
-			creator=true;
         	console.log("Fucntion callled.")
         	console.log(error_code);
             if (edit_create==false&&error_code==false) {
                 var iframe = document.querySelectorAll('iframe');
                 try {
-                    iframe[0].parentNode.removeChild(iframe[0]);
+                	if(!editor){
+                    	iframe[0].parentNode.removeChild(iframe[0]);
+                	}
                 } catch (e) {
                 }      
                 features = new ol.Collection();
@@ -438,7 +357,6 @@
             }
         }
         function display_drop_submit_edit() {
-        	if(!creator){
         	edit_create=true;
         	editor=true;
         	console.log(edit_create);
@@ -479,7 +397,7 @@
                     }
                     
                 }
-            });}
+            });
         }
        
 </script>

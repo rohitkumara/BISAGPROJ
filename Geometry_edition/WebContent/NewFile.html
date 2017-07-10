@@ -350,11 +350,11 @@
             var request = new XMLHttpRequest();
             console.log(i_d);
             if(editor){
-            	request.open("POST", "http://localhost:8081/Geometry_edition/edit_feature?id=" + id_feature + "&top=" + routeFeatures, true);
+            	request.open("POST", "http://localhost:8081/Geometry_edition/edit_feature?id=" + id_feature.trim() + "&top=" + routeFeatures, true);
             	request.send();
             }
             else{
-            	request.open("POST", "http://localhost:8081/Geometry_edition/Geom_servlet?top=" + routeFeatures + "&name=" + nam + "&notes=" + note + "&id=" + i_d, true);
+            	request.open("POST", "http://localhost:8081/Geometry_edition/Geom_servlet?top=" + routeFeatures.trim() + "&name=" + nam.trim() + "&notes=" + note.trim() + "&id=" + i_d, true);
             	request.send();
             	
             }
