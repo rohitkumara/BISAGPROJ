@@ -213,7 +213,7 @@ var username = prompt("What is your name?");
             }
         });
         
-        var untiled1 = new ol.layer.Tile({
+        var untiled1 = new ol.layer.Image({
             source: untiled1_source,
             opacity: 0.65
         });
@@ -358,7 +358,6 @@ var username = prompt("What is your name?");
         }
         function display_drop_submit_edit() {
         	edit_create=true;
-        	editor=true;
         	console.log(edit_create);
             document.getElementById('createInfo').style.visibility = 'visible';
             document.getElementById('type').style.visibility = 'hidden';
@@ -382,12 +381,13 @@ var username = prompt("What is your name?");
                     	edit_create=false;console.log(edit_create);
                         document.getElementById('type').style.visibility='visible';
                         map.unByKey(listen);
-                        url_act = "http://localhost:8081/Geometry_edition/delete_feature?top=" + str;
+                        url_act = "http://localhost:8081/Geometry_edition/get_id?top=" + str;
                         $.get(url_act, function(data){
                         	if(data==-1){
                             	alert("There was an error. Please try again.");
                             	error_code = true;
                         	}
+                        	editor=true;
                         	console.log("At error miessage display"+error_code);
                             id_feature = data;
                             console.log("Calling choice draw edit.");

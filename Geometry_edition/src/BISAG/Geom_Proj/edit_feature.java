@@ -56,7 +56,7 @@ public class edit_feature extends HttpServlet {
 		} catch (SQLException e) {
 			System.out.println(e);
 		}
-		String query="select * from features_test where id="+id;
+		String query="select * from features_tpest where id="+id;
 		Statement stmt = conn.createStatement();
 		System.out.println(query);
 		try{
@@ -80,9 +80,5 @@ public class edit_feature extends HttpServlet {
 		try{
 			rs = stmt.executeQuery(query);
 		}catch(Exception e){}
-		while(rs.next()){
-			name = rs.getString("name");
-			notes = rs.getString("notes");
-		}
 	}
 }

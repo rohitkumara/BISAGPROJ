@@ -28,7 +28,7 @@ import java.util.regex.Pattern;
 /**
  * Servlet implementation class return_json
  */
-@WebServlet("/delete_feature")
+@WebServlet("/get_id")
 public class get_id extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 	
@@ -57,11 +57,9 @@ public class get_id extends HttpServlet {
 	        while ((line = br.readLine()) != null) {
 	        	 Pattern p = Pattern.compile(">\\d+<");
 	        	 Matcher m = p.matcher(line);
-	        	 if(m.find())
-	        	    if((m.group().subSequence(1, m.group().length()-1)).length()!=3)
-	        	    		{
-	        	    			id_s = (String)m.group().subSequence(1, m.group().length()-1);
-	        	    		}
+	        	 if(m.find()){
+	        	    id_s = (String)m.group().subSequence(1, m.group().length()-1);
+	        	 }
 	        	}
 	        System.out.println(id_s);
 	    } catch (MalformedURLException mue) {
